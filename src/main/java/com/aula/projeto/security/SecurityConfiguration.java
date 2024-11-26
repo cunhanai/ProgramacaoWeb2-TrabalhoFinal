@@ -19,7 +19,7 @@ public class SecurityConfiguration {
     @Bean
     public InMemoryUserDetailsManager userDetailsManager() {
         UserDetails vUser = User
-            .withUsername("mcardoso")
+            .withUsername("anaebiel")
             .password(passwordEncoder().encode("123abc"))
             .roles("USER")
             .build();
