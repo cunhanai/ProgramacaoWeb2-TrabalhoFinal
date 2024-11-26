@@ -41,7 +41,7 @@ public class DepartamentoController {
         Departamento vDepartamento = deptoRepository
             .findById(pIdDepto)
             .orElseThrow(
-                () -> new com.aula.projeto.exception.NoSuchElementException("Departamento "+pIdDepto+" não encontrado!")
+                () -> new com.trabalho.projeto.exception.NoSuchElementException("Departamento "+pIdDepto+" não encontrado!")
             );
         return ResponseEntity.ok().body(vDepartamento);
     }
@@ -59,7 +59,7 @@ public class DepartamentoController {
         Departamento vDeptoAtual = deptoRepository
             .findById(pIdDepto)
             .orElseThrow(
-                () -> new com.aula.projeto.exception.NoSuchElementException("Departamento "+pIdDepto+" não encontrado!")
+                () -> new com.trabalho.projeto.exception.NoSuchElementException("Departamento "+pIdDepto+" não encontrado!")
             );
         if (pDepartamento.getNmDepto() != null) {
             vDeptoAtual.setNmDepto(pDepartamento.getNmDepto());
@@ -76,13 +76,13 @@ public class DepartamentoController {
         Departamento vDepto = deptoRepository
             .findById(pIdDepto)
             .orElseThrow(
-                () -> new com.aula.projeto.exception.NoSuchElementException("Departamento "+pIdDepto+" não encontrado!")
+                () -> new com.trabalho.projeto.exception.NoSuchElementException("Departamento "+pIdDepto+" não encontrado!")
             );
 
         try {
             deptoRepository.deleteById(pIdDepto);
         } catch (org.springframework.dao.DataIntegrityViolationException e) {
-            throw new com.aula.projeto.exception.DataIntegrityViolationException("Departamento "+vDepto.getNmDepto()+" possui funcionários alocados. Não pode ser excluído!");
+            throw new com.trabalho.projeto.exception.DataIntegrityViolationException("Departamento "+vDepto.getNmDepto()+" possui funcionários alocados. Não pode ser excluído!");
         }
         
         return ResponseEntity.ok().body(new MensagemDTO("Ok","Departamento "+pIdDepto+" deletado com sucesso!"));

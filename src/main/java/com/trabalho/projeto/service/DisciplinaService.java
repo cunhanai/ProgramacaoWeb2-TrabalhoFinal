@@ -40,7 +40,7 @@ public class DisciplinaService {
         try {
             vDisciplina = disciplinaRepository.save(vDisciplina);    
         } catch (org.springframework.dao.DataIntegrityViolationException e) {
-            throw new com.aula.projeto.exception.DataIntegrityViolationException("Aluno "+vAluno.getNmAluno()+" já está matriculado na disciplina "+vDisciplina.getNmDisciplina()+"!");
+            throw new com.trabalho.projeto.exception.DataIntegrityViolationException("Aluno "+vAluno.getNmAluno()+" já está matriculado na disciplina "+vDisciplina.getNmDisciplina()+"!");
         }
 
         return vDisciplina;
