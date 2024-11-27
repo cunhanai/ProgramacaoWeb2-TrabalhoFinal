@@ -1,5 +1,5 @@
 package com.trabalho.projeto.model;
-
+/* 
 import java.io.Serializable;
 import java.util.List;
 
@@ -21,7 +21,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
-@Entity
+@Entity */
 public class UsuarioTarefas {
     
 }
