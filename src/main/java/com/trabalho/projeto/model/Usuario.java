@@ -30,4 +30,9 @@ public class Usuario implements Serializable{
     private String nomeUsuario;
     private String emailUsuario;
     private String senhaUsuario;
+
+    @ManyToMany(mappedBy = "usuarios")
+    @JsonIgnore
+    private List<Grupo> grupos;
+        
 }
