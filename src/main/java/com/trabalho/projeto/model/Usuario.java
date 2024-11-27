@@ -3,13 +3,25 @@ package com.trabalho.projeto.model;
 import java.io.Serializable;
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.ManyToAny;
+import org.hibernate.validator.constraints.Length;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.trabalho.projeto.dto.UsuarioDto;
+
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.UniqueConstraint;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -27,12 +39,53 @@ public class Usuario implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idUsuario;
-    private String nomeUsuario;
-    private String emailUsuario;
-    private String senhaUsuario;
+
+    @NotBlank
+    @NotEmpty
+    @Length(min = 3, max = 255, message = "Nome do usuário deve ter entre 3 e 255 caracteres!")
+    private String nome;
+
+    @NotBlank
+    @NotEmpty
+    @Column(unique=true)
+    @Email(message="E-mail inválido!")
+    private String email;
+
+    @JsonIgnore
+    @Length(min = 5, max = 15, message = "Senha deve ter entre 5 e 15 caracteres!")
+    private String senhaDecriptada;
+
+    @NotBlank
+    @NotEmpty
+    @Column(length=60)
+    private String senha;
 
     @ManyToMany(mappedBy = "usuarios")
     @JsonIgnore
     private List<Grupo> grupos;
-        
+
+    @ManyToAny
+    @JoinTable(
+        name = "tarefa_usuario",
+        joinColumns = @JoinColumn(name="idTarefa"),
+        inverseJoinColumns = @JoinColumn(name="idUsuario"),
+        uniqueConstraints = @UniqueConstraint(
+            name="tarefa_usuario_unique",
+            columnNames = {"idUsuario","idTarefa"}
+        )
+    )
+    @JsonIgnore
+    private List<Tarefas> tarefas;
+
+    public Usuario(UsuarioDto usuarioDto) {
+        setIdUsuario(null);
+        setNome(usuarioDto.getNome());
+        setEmail(usuarioDto.getEmail());
+        definirSenhaEncriptada(usuarioDto.getSenha());
+    }
+
+    private void definirSenhaEncriptada(String senhaDecriptada) {
+        this.senha = new BCryptPasswordEncoder().encode(senhaDecriptada);
+        this.senhaDecriptada = senhaDecriptada;
+    }
 }
