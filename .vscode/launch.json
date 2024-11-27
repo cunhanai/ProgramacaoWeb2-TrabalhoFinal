@@ -5,7 +5,7 @@
             "name": "Spring Boot-ProjetoApplication<projeto>",
             "request": "launch",
             "cwd": "${workspaceFolder}",
-            "mainClass": "com.aula.projeto.ProjetoApplication",
+            "mainClass": "com.trabalho.projeto.ProjetoApplication",
             "projectName": "projeto",
             "args": "",
             "envFile": "${workspaceFolder}/.env"
