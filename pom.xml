@@ -8,11 +8,11 @@
 		<version>3.3.2</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.aula</groupId>
+	<groupId>com.trabalho</groupId>
 	<artifactId>projeto</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>projeto</name>
-	<description>Projeto de aula com Spring Boot</description>
+	<description>Trabalho final da disciplina de Programação Web II</description>
 	<url/>
 	<licenses>
 		<license/>
