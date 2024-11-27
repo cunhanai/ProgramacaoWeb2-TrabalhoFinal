@@ -45,4 +45,8 @@ public class Grupo implements Serializable{
     @JsonIgnore
     private List<Usuario> usuarios;
 
+    @ManyToMany(mappedBy = "categoria")
+    @JsonIgnore
+    private List<Categoria> categorias;
+
 }

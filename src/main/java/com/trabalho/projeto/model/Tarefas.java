@@ -30,4 +30,8 @@ public class Tarefas implements Serializable{
     private String descricaoTarefa;
     private Integer prioridadeTareda;
     private boolean concluidaTarefa;
+    
+    @ManyToMany(mappedBy = "tarefas")
+    @JsonIgnore
+    private List<Tarefas> tarefas;
 }
