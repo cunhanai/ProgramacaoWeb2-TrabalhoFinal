@@ -3,7 +3,10 @@ package com.trabalho.projeto.model;
 import java.io.Serializable;
 import java.util.List;
 
+import org.hibernate.validator.constraints.Length;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.trabalho.projeto.dto.TarefasDto;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -29,9 +32,17 @@ public class Tarefas implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idTarefa;
+
+    @NotBlank
+    @NotEmpty
+    @Length(min = 3, max = 255, message = "[] da tarefa deve ter entre 3 e 255 caracteres!")
     private String tituloTarefa;
+
+    @Length(min = 3, max = 9999, message = "[] da tarefa deve ter entre 3 e 9999 caracteres!")
     private String descricaoTarefa;
-    private Integer prioridadeTareda;
+
+    private Integer prioridadeTarefa;
+
     private boolean concluidaTarefa;
     
     @ManyToMany(mappedBy = "tarefas")
@@ -43,4 +54,12 @@ public class Tarefas implements Serializable{
     @OneToMany(mappedBy = "tarefas")
     @JsonIgnore
     private List<Usuario> usuarios;
+
+    public Tarefas(TarefasDto tarefasDto) {
+        setIdTarefa(null);
+        setTituloTarefa(tarefasDto.getTituloTarefa());
+        setDescricaoTarefa(tarefasDto.getDescricaoTarefa());
+        setPrioridadeTarefa(tarefasDto.getPrioridadeTarefa());
+        setConcluidaTarefa(tarefasDto.getConcluidaTarefa());
+    }
 }

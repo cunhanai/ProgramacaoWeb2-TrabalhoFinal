@@ -3,7 +3,10 @@ package com.trabalho.projeto.model;
 import java.io.Serializable;
 import java.util.List;
 
+import org.hibernate.validator.constraints.Length;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.trabalho.projeto.dto.CategoriaDto;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -13,6 +16,8 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.UniqueConstraint;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -30,6 +35,10 @@ public class Categoria implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idCategoria;
+
+    @NotBlank
+    @NotEmpty
+    @Length(min = 3, max = 255, message = "Titulo da categoria deve ter entre 3 e 255 caracteres!")
     private String tituloCategoria;
 
     @ManyToMany
@@ -57,4 +66,9 @@ public class Categoria implements Serializable {
     )
     @JsonIgnore
     private List<Grupo> grupos;
+
+    public Categoria(CategoriaDto categoriaDto) {
+        setIdCategoria(null);
+        setTituloCategoria(categoriaDto.getTituloCategoria());
+    }
 }
