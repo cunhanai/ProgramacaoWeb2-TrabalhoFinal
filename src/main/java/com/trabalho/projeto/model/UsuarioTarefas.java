@@ -22,17 +22,6 @@ import lombok.Setter;
 @NoArgsConstructor
 @EqualsAndHashCode
 @Entity
-public class Usuario implements Serializable{
+public class UsuarioTarefas {
     
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idUsuario;
-    private String nomeUsuario;
-    private String emailUsuario;
-    private String senhaUsuario;
-
-    @ManyToMany(mappedBy = "usuarios")
-    @JsonIgnore
-    private List<Grupo> grupos;
-        
 }
