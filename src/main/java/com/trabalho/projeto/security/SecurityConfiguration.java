@@ -31,6 +31,7 @@ public class SecurityConfiguration {
     public SecurityFilterChain filterChain(HttpSecurity pHttp) throws Exception {
         pHttp
             .csrf(pCsrf -> pCsrf.disable())
+            .headers(header -> header.frameOptions(frameOptions -> frameOptions.sameOrigin()))
             .cors(Customizer.withDefaults())
             .sessionManagement(
                 pSession -> pSession.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
