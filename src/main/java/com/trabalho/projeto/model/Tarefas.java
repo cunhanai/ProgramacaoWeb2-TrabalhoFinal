@@ -33,5 +33,5 @@ public class Tarefas implements Serializable{
     
     @ManyToMany(mappedBy = "tarefas")
     @JsonIgnore
-    private List<Tarefas> tarefas;
+    private List<Categoria> categoria;
 }

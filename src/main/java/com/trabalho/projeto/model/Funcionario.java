@@ -38,7 +38,7 @@ public class Funcionario implements Serializable {
     @Email
     private String email;
 
-    @ManyToOne
+    @ManyToOne(optional=false)
     @JoinColumn(name="id_depto")
     @JsonIgnore
     private Departamento departamentoFunc;

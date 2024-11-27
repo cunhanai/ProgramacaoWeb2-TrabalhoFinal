@@ -56,5 +56,5 @@ public class Categoria implements Serializable {
         )
     )
     @JsonIgnore
-    private List<Categoria> categorias;
+    private List<Grupo> grupos;
 }
