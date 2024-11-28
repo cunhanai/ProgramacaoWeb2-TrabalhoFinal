@@ -18,6 +18,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.UniqueConstraint;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -62,9 +63,10 @@ public class Usuario implements Serializable{
 
     private boolean isLogado;
 
-    @ManyToMany(mappedBy = "usuarios")
+    @ManyToOne
+    @JoinColumn(name = "idGrupo")
     @JsonIgnore
-    private List<Grupo> grupos;
+    private Grupo grupoUsuario;
 
     @ManyToAny
     @JoinTable(

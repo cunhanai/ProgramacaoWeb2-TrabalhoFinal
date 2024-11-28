@@ -12,10 +12,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
-import jakarta.persistence.UniqueConstraint;
+import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
@@ -41,16 +39,7 @@ public class Grupo implements Serializable{
     @Length(min = 3, max = 255, message = "Nome do grupo deve ter entre 3 e 255 caracteres!")
     private String nome;
 
-    @ManyToMany
-    @JoinTable(
-        name = "grupo_usuario",
-        joinColumns = @JoinColumn(name="idGrupo"),
-        inverseJoinColumns = @JoinColumn(name="idUsuario"),
-        uniqueConstraints = @UniqueConstraint(
-            name="grupo_usuario_unique",
-            columnNames = {"idGrupo","idUsuario"}
-        )
-    )
+    @OneToMany(mappedBy = "grupoUsuario")
     @JsonIgnore
     private List<Usuario> usuarios;
 

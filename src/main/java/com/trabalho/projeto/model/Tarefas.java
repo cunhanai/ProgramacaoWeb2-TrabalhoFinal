@@ -69,4 +69,11 @@ public class Tarefas implements Serializable{
 
         categorias.add(categoriaNova);
     }
+
+    public void adicionarUsuario(Usuario usuario) {
+        if (usuarios == null)
+            usuarios = new ArrayList<Usuario>();
+
+        usuarios.add(usuario);
+    }
 }
