@@ -41,5 +41,5 @@ public class Funcionario implements Serializable {
     @ManyToOne(optional=false)
     @JoinColumn(name="id_depto")
     @JsonIgnore
-    private Departamento departamentoFunc;
+    private Setor departamentoFunc;
 }

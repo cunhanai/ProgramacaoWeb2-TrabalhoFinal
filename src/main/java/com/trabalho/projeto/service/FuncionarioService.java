@@ -5,8 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.trabalho.projeto.model.Departamento;
 import com.trabalho.projeto.model.Funcionario;
+import com.trabalho.projeto.model.Setor;
 import com.trabalho.projeto.repository.DepartamentoRepository;
 import com.trabalho.projeto.repository.FuncionarioRepository;
 
@@ -32,7 +32,7 @@ public class FuncionarioService {
     }
 
     public Funcionario insFuncionario(Funcionario pFuncionario, Integer pIdDepartamento) {
-        Departamento vDepartamento = departamentoRepository
+        Setor vDepartamento = departamentoRepository
             .findById(pIdDepartamento)
             .orElseThrow();
 
@@ -47,7 +47,7 @@ public class FuncionarioService {
             .findById(pFuncionario.getIdFuncionario())
             .orElseThrow();
 
-        Departamento vDepartamento = departamentoRepository
+        Setor vDepartamento = departamentoRepository
             .findById(pIdDepartamento)
             .orElseThrow();
 
@@ -72,7 +72,7 @@ public class FuncionarioService {
 
     public List<Funcionario> searchByDepto(Integer pIdDepartamento) {
 
-        Departamento vDepto = departamentoRepository
+        Setor vDepto = departamentoRepository
             .findById(pIdDepartamento)
             .orElseThrow(
                 () -> new com.trabalho.projeto.exception.NoSuchElementException("Departamento "+pIdDepartamento+" não encontrado!")

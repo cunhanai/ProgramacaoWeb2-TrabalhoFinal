@@ -37,9 +37,9 @@ public class Categoria implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idCategoria;
 
-    @NotBlank
-    @NotEmpty
-    @Length(min = 3, max = 255, message = "Titulo da categoria deve ter entre 3 e 255 caracteres!")
+    @NotBlank(message = "Título da categoria não pode ser nulo!")
+    @NotEmpty(message = "Título da categoria não pode ser branco!")
+    @Length(min = 3, max = 255, message = "Título da categoria deve ter entre 3 e 255 caracteres!")
     private String tituloCategoria;
 
     @ManyToMany

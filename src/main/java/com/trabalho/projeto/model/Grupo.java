@@ -34,8 +34,8 @@ public class Grupo implements Serializable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @NotBlank
-    @NotEmpty
+    @NotBlank(message = "Nome do grupo não pode ser nulo!")
+    @NotEmpty(message = "Nome do grupo não pode ser branco!")
     @Length(min = 3, max = 255, message = "Nome do grupo deve ter entre 3 e 255 caracteres!")
     private String nome;
 

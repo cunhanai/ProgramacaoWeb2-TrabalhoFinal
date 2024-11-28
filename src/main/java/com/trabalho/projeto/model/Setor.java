@@ -11,7 +11,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
-import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -25,23 +24,18 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
-//@Entity(name = "TBL_2120")
 @Entity
-public class Departamento implements Serializable {
+public class Setor implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    //@Column(name="CD_DEPTO")
-    private Integer idDepto;
+    private Integer idSetor;
     
-    @NotNull(message = "Nome do departamento não pode ser nulo!")
-    @NotBlank(message = "Nome do departamento não pode ser branco!")
-    @Length(min = 5, max = 255, message = "Nome do departamento deve ter entre 5 e 255 caracteres!")
-    private String nmDepto;
+    @NotNull(message = "Nome do setor não pode ser nulo!")
+    @NotBlank(message = "Nome do setor não pode ser branco!")
+    @Length(min = 5, max = 255, message = "Nome do setor deve ter entre 5 e 255 caracteres!")
+    private String nomeSetor;
 
-    @Email
-    private String email;
-
-    @OneToMany(mappedBy="departamentoFunc")
-    private List<Funcionario> funcionarios = new ArrayList<>();
+    @OneToMany(mappedBy="setorGrupos")
+    //private List<> funcionarios = new ArrayList<>();
 }

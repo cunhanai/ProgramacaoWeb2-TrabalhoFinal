@@ -17,7 +17,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.UniqueConstraint;
 import jakarta.validation.constraints.Email;
@@ -41,13 +40,13 @@ public class Usuario implements Serializable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idUsuario;
 
-    @NotBlank
-    @NotEmpty
+    @NotBlank(message = "Nome do usuário não pode ser nulo!")
+    @NotEmpty(message = "Nome do Email do usuário não pode ser branco!")
     @Length(min = 3, max = 255, message = "Nome do usuário deve ter entre 3 e 255 caracteres!")
     private String nome;
 
-    @NotBlank
-    @NotEmpty
+    @NotBlank(message = "Email do usuário não pode ser nulo!")
+    @NotEmpty(message = "Email do usuário não pode ser branco!")
     @Column(unique=true)
     @Email(message="E-mail inválido!")
     private String email;
@@ -56,8 +55,8 @@ public class Usuario implements Serializable{
     @Length(min = 5, max = 15, message = "Senha deve ter entre 5 e 15 caracteres!")
     private String senhaDecriptada;
 
-    @NotBlank
-    @NotEmpty
+    @NotBlank(message = "Senha do usuário não pode ser nulo!")
+    @NotEmpty(message = "Senha do usuário não pode ser branco!")
     @Column(length=60)
     private String senha;
 

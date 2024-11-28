@@ -34,12 +34,12 @@ public class Tarefas implements Serializable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idTarefa;
 
-    @NotBlank
-    @NotEmpty
-    @Length(min = 3, max = 255, message = "[] da tarefa deve ter entre 3 e 255 caracteres!")
+    @NotBlank(message = "Título da tarefa não pode ser nulo!")
+    @NotEmpty(message = "Título da tarefa não pode ser branco!")
+    @Length(min = 3, max = 255, message = "Título da tarefa deve ter entre 3 e 255 caracteres!")
     private String tituloTarefa;
 
-    @Length(min = 3, max = 9999, message = "[] da tarefa deve ter entre 3 e 9999 caracteres!")
+    @Length(min = 3, max = 9999, message = "Descrição da tarefa deve ter entre 3 e 9999 caracteres!")
     private String descricaoTarefa;
 
     private Integer prioridadeTarefa;
@@ -49,8 +49,6 @@ public class Tarefas implements Serializable{
     @ManyToMany(mappedBy = "tarefas")
     private List<Categoria> categorias;
 
-    @NotBlank
-    @NotEmpty
     @OneToMany(mappedBy = "tarefas")
     @JsonIgnore
     private List<Usuario> usuarios;
