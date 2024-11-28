@@ -60,6 +60,6 @@ public class Tarefas implements Serializable{
         setTituloTarefa(tarefasDto.getTituloTarefa());
         setDescricaoTarefa(tarefasDto.getDescricaoTarefa());
         setPrioridadeTarefa(tarefasDto.getPrioridadeTarefa());
-        setConcluidaTarefa(tarefasDto.getConcluidaTarefa());
+        setConcluidaTarefa(tarefasDto.isConcluidaTarefa());
     }
 }

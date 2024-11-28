@@ -60,6 +60,8 @@ public class Usuario implements Serializable{
     @Column(length=60)
     private String senha;
 
+    private boolean isLogado;
+
     @ManyToMany(mappedBy = "usuarios")
     @JsonIgnore
     private List<Grupo> grupos;
@@ -81,10 +83,11 @@ public class Usuario implements Serializable{
         setIdUsuario(null);
         setNome(usuarioDto.getNome());
         setEmail(usuarioDto.getEmail());
+        setLogado(false);
         definirSenhaEncriptada(usuarioDto.getSenha());
     }
 
-    private void definirSenhaEncriptada(String senhaDecriptada) {
+    public void definirSenhaEncriptada(String senhaDecriptada) {
         this.senha = new BCryptPasswordEncoder().encode(senhaDecriptada);
         this.senhaDecriptada = senhaDecriptada;
     }

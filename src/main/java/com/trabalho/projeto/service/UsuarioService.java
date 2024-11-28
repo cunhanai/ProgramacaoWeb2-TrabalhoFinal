@@ -1,9 +1,14 @@
 package com.trabalho.projeto.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.trabalho.projeto.dto.UsuarioDto;
+import com.trabalho.projeto.dto.UsuarioEditadoDto;
+import com.trabalho.projeto.exception.InvalidLoginException;
 import com.trabalho.projeto.model.Usuario;
 import com.trabalho.projeto.repository.UsuarioRepository;
 
@@ -18,8 +23,56 @@ public class UsuarioService {
         return usuarioRepository.save(usuario);
     }
 
+    public void deletarUsuario(int id) {
+        Usuario usuario = buscarUsuario(id);
+        usuarioRepository.delete(usuario);
+    }
+
     private Usuario converterDtoEmEntidade(UsuarioDto usuarioDto) {
         Usuario usuario = new Usuario(usuarioDto);
+        return usuario;
+    }
+
+    public List<Usuario> buscarTodosUsuarios() {
+        return usuarioRepository.findAll();
+    }
+
+    public Usuario buscarUsuario(int id) {
+        return usuarioRepository
+            .findById(id)
+            .orElseThrow(
+                () -> new com.trabalho.projeto.exception.NoSuchElementException("Usuário "+ id +" não encontrado!")
+        );
+    }
+
+    public Usuario editarUsuario(UsuarioEditadoDto usuarioEditadoDto) {
+        Usuario usuario = buscarUsuario(usuarioEditadoDto.getIdUsuario());
+
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+
+        if (!encoder.matches(usuarioEditadoDto.getSenhaAtual(), usuario.getSenha()))
+            throw new InvalidLoginException("Senha atual incorreta!");
+
+        boolean temAlteracao = false;
+
+        if (!usuarioEditadoDto.getNome().isBlank()) {
+            usuario.setNome(usuarioEditadoDto.getNome());
+            temAlteracao = true;
+        }
+
+        if (!usuarioEditadoDto.getEmail().isBlank()) {
+            usuario.setEmail(usuarioEditadoDto.getEmail());
+            temAlteracao = true;
+        }
+
+        if (!usuarioEditadoDto.getSenhaNova().isBlank()){
+            usuario.definirSenhaEncriptada(usuarioEditadoDto.getSenhaNova());
+            temAlteracao = true;
+        }
+
+        if (temAlteracao)
+            usuarioRepository.save(usuario);
+
         return usuario;
     }
 }

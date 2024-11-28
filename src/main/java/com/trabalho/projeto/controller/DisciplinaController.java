@@ -5,8 +5,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.trabalho.projeto.dto.MensagemDTO;
 import com.trabalho.projeto.model.Disciplina;
-import com.trabalho.projeto.model.MensagemDTO;
 import com.trabalho.projeto.service.DisciplinaService;
 
 import org.springframework.web.bind.annotation.PathVariable;

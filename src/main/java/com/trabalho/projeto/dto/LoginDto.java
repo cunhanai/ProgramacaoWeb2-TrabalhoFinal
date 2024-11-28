@@ -3,8 +3,8 @@ package com.trabalho.projeto.dto;
 import lombok.Getter;
 
 @Getter
-public class UsuarioDto {
-    private String nome;
+public class LoginDto {
+
     private String email;
     private String senha;
 }

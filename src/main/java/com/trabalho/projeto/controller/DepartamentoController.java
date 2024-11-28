@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.trabalho.projeto.dto.MensagemDTO;
 import com.trabalho.projeto.model.Departamento;
-import com.trabalho.projeto.model.MensagemDTO;
 import com.trabalho.projeto.repository.DepartamentoRepository;
 
 import org.springframework.web.bind.annotation.DeleteMapping;

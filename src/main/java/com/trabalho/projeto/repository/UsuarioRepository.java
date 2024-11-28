@@ -6,4 +6,5 @@ import com.trabalho.projeto.model.Usuario;
 
 public interface  UsuarioRepository extends JpaRepository<Usuario, Integer> {
 
+    Usuario findOneByEmail(String email);
 }
