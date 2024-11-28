@@ -1,6 +1,7 @@
 package com.trabalho.projeto.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.validator.constraints.Length;
@@ -46,8 +47,7 @@ public class Tarefas implements Serializable{
     private boolean concluidaTarefa;
     
     @ManyToMany(mappedBy = "tarefas")
-    @JsonIgnore
-    private List<Categoria> categoria;
+    private List<Categoria> categorias;
 
     @NotBlank
     @NotEmpty
@@ -61,5 +61,12 @@ public class Tarefas implements Serializable{
         setDescricaoTarefa(tarefasDto.getDescricaoTarefa());
         setPrioridadeTarefa(tarefasDto.getPrioridadeTarefa());
         setConcluidaTarefa(tarefasDto.isConcluidaTarefa());
+    }
+
+    public void adicionarCategoria(Categoria categoriaNova) {
+        if (categorias == null)
+            categorias = new ArrayList<>();
+
+        categorias.add(categoriaNova);
     }
 }

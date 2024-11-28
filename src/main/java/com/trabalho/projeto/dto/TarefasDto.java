@@ -6,6 +6,7 @@ import lombok.Getter;
 public class TarefasDto {
     private String tituloTarefa;
     private String descricaoTarefa;
-    private Integer prioridadeTarefa;
+    private int prioridadeTarefa;
     private boolean concluidaTarefa;
+    private int idCategoria;
 }

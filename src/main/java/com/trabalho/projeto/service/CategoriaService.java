@@ -13,7 +13,11 @@ public class CategoriaService {
     @Autowired
     private CategoriaRepository categoriaRepository;
 
+    @Autowired
+    private UsuarioService usuarioService;
+
     public Categoria adicionarCategoria(CategoriaDto categoriaDto) {
+        usuarioService.verificarUsuarioLogado();
         Categoria categoria = converterDtoEmEntidade(categoriaDto);
         return categoriaRepository.save(categoria);
     }
@@ -21,5 +25,14 @@ public class CategoriaService {
     private Categoria converterDtoEmEntidade(CategoriaDto categoriaDto) {
         Categoria categoria = new Categoria(categoriaDto);
         return categoria;
+    }
+
+    public Categoria buscarCategoria(Integer idCategoria) {
+        usuarioService.verificarUsuarioLogado();
+
+        return categoriaRepository
+            .findById(idCategoria)
+            .orElseThrow(
+                () -> new com.trabalho.projeto.exception.NoSuchElementException("Categoria "+ idCategoria +" não encontrada!"));
     }
 }
