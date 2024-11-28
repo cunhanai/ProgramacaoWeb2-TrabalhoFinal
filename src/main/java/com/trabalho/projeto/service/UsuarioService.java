@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.trabalho.projeto.dto.UsuarioDto;
 import com.trabalho.projeto.dto.UsuarioEditadoDto;
-import com.trabalho.projeto.exception.InvalidLoginException;
+import com.trabalho.projeto.exception.LoginException;
 import com.trabalho.projeto.model.Usuario;
 import com.trabalho.projeto.repository.UsuarioRepository;
 
@@ -51,7 +51,7 @@ public class UsuarioService {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
         if (!encoder.matches(usuarioEditadoDto.getSenhaAtual(), usuario.getSenha()))
-            throw new InvalidLoginException("Senha atual incorreta!");
+            throw new LoginException("Senha atual incorreta!");
 
         boolean temAlteracao = false;
 
@@ -74,5 +74,17 @@ public class UsuarioService {
             usuarioRepository.save(usuario);
 
         return usuario;
+    }
+
+    public void verificarUsuarioLogado() {
+        Usuario usuarioLogado = usuarioRepository.findOneByIsLogadoTrue();
+
+        if (usuarioLogado == null)
+            throw new LoginException("Nenhum usuário logado encontrado!");
+
+    }
+
+    public List<Usuario> buscarUsuarioPorGrupo(int idGrupo) {
+        return usuarioRepository.findUsuarioByGrupos_Id(idGrupo);
     }
 }
