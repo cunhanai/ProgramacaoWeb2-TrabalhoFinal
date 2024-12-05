@@ -1,6 +1,8 @@
 package com.trabalho.projeto.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.hibernate.validator.constraints.Length;
 
@@ -8,6 +10,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -33,6 +36,6 @@ public class Setor implements Serializable {
     @Length(min = 5, max = 255, message = "Nome do setor deve ter entre 5 e 255 caracteres!")
     private String nomeSetor;
 
-    // @OneToMany(mappedBy="setorGrupos")
-    // private List<> funcionarios = new ArrayList<>();
+    @OneToMany(mappedBy="setorGrupos")
+    //private List<> funcionarios = new ArrayList<>();
 }

@@ -1,6 +1,5 @@
 package com.trabalho.projeto.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.trabalho.projeto.model.Funcionario;
 import com.trabalho.projeto.model.Setor;
-// import com.trabalho.projeto.repository.DepartamentoRepository;
+import com.trabalho.projeto.repository.DepartamentoRepository;
 import com.trabalho.projeto.repository.FuncionarioRepository;
 
 @Service
@@ -17,8 +16,8 @@ public class FuncionarioService {
     @Autowired
     private FuncionarioRepository funcionarioRepository;
 
-    // @Autowired
-    // private DepartamentoRepository departamentoRepository;
+    @Autowired
+    private DepartamentoRepository departamentoRepository;
 
     public List<Funcionario> findAll() {
         return funcionarioRepository.findAll();
@@ -33,12 +32,12 @@ public class FuncionarioService {
     }
 
     public Funcionario insFuncionario(Funcionario pFuncionario, Integer pIdDepartamento) {
-        // Setor vDepartamento = departamentoRepository
-        //     .findById(pIdDepartamento)
-        //     .orElseThrow();
+        Setor vDepartamento = departamentoRepository
+            .findById(pIdDepartamento)
+            .orElseThrow();
 
         pFuncionario.setIdFuncionario(null);
-        // pFuncionario.setDepartamentoFunc(vDepartamento);
+        pFuncionario.setDepartamentoFunc(vDepartamento);
 
         return funcionarioRepository.save(pFuncionario);
     }
@@ -48,9 +47,9 @@ public class FuncionarioService {
             .findById(pFuncionario.getIdFuncionario())
             .orElseThrow();
 
-        // Setor vDepartamento = departamentoRepository
-        //     .findById(pIdDepartamento)
-        //     .orElseThrow();
+        Setor vDepartamento = departamentoRepository
+            .findById(pIdDepartamento)
+            .orElseThrow();
 
         if (pFuncionario.getNmFuncionario() != null) {
             vFuncAtual.setNmFuncionario(pFuncionario.getNmFuncionario());
@@ -58,7 +57,7 @@ public class FuncionarioService {
         if (pFuncionario.getEmail() != null) {
             vFuncAtual.setEmail(pFuncionario.getEmail());
         }
-        // vFuncAtual.setDepartamentoFunc(vDepartamento);
+        vFuncAtual.setDepartamentoFunc(vDepartamento);
 
         return funcionarioRepository.save(vFuncAtual);
     }
@@ -73,19 +72,19 @@ public class FuncionarioService {
 
     public List<Funcionario> searchByDepto(Integer pIdDepartamento) {
 
-        // Setor vDepto = departamentoRepository
-        //     .findById(pIdDepartamento)
-        //     .orElseThrow(
-        //         () -> new com.trabalho.projeto.exception.NoSuchElementException("Departamento "+pIdDepartamento+" não encontrado!")
-        //     );
+        Setor vDepto = departamentoRepository
+            .findById(pIdDepartamento)
+            .orElseThrow(
+                () -> new com.trabalho.projeto.exception.NoSuchElementException("Departamento "+pIdDepartamento+" não encontrado!")
+            );
 
-        // List<Funcionario> funcionarios = funcionarioRepository.searchByDepto(pIdDepartamento);
+        List<Funcionario> funcionarios = funcionarioRepository.searchByDepto(pIdDepartamento);
 
-        // if (funcionarios.isEmpty()) {
-        //     throw new com.trabalho.projeto.exception.NoSuchElementException("Departamento "+pIdDepartamento+" - "+vDepto.getNmDepto()+" não possui funcionários!");
-        // }
+        if (funcionarios.isEmpty()) {
+            throw new com.trabalho.projeto.exception.NoSuchElementException("Departamento "+pIdDepartamento+" - "+vDepto.getNmDepto()+" não possui funcionários!");
+        }
 
-        return new ArrayList<Funcionario>();
+        return funcionarios;
     }
 
     public List<Funcionario> searchByNome(String pNome) {
