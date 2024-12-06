@@ -23,19 +23,29 @@ import com.trabalho.projeto.service.UsuarioService;
 
 
 
-@RequestMapping(value = "/usuario")
+/**
+ * Controlador para usuarios
+ */
 @RestController
+@RequestMapping(value = "/usuario")
 public class UsuarioController {
 
     @Autowired
     UsuarioService usuarioService;
 
+    /**
+     * Adicionar usuario
+     * @param usuarioDto Insira dados para o cadastro do usuario:
+     */
     @PostMapping
     public ResponseEntity<Usuario> adicionarUsuario(@RequestBody UsuarioDto usuarioDto) {
         Usuario usuario = usuarioService.adicionarUsuario(usuarioDto);
         return ResponseEntity.ok().body(usuario);
     }
 
+    /**
+     * Visualizar todos os usuarios
+     */
     @GetMapping
     public ResponseEntity<List<Usuario>> vizualizarUsuarios() {
 
@@ -43,12 +53,20 @@ public class UsuarioController {
         return ResponseEntity.ok().body(usuarios);
     }
     
+    /**
+     * Buscar usuario
+     * @param id Id do usuario que deseja encontrar:
+     */
     @GetMapping(value = "/{id}")
     public ResponseEntity<Usuario> verUsuario(@RequestParam int id) {
         Usuario usuario = usuarioService.buscarUsuario(id);
         return ResponseEntity.ok().body(usuario);
     }
 
+    /**
+     * Editar usuario
+     * @param usuarioEditadoDto Editor de usuario:
+     */
     @PutMapping
     public ResponseEntity<Usuario> editarUsuario(@RequestBody UsuarioEditadoDto usuarioEditadoDto) {
         Usuario usuario = usuarioService.editarUsuario(usuarioEditadoDto);
@@ -56,7 +74,10 @@ public class UsuarioController {
         return ResponseEntity.ok().body(usuario);
     }
     
-    
+    /**
+     * Deletar usuario
+     * @param id Id do usuario a ser deletado:
+     */
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<MensagemDTO> deletarUsuario(@PathVariable int id) {
         try {

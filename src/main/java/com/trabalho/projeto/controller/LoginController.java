@@ -11,13 +11,20 @@ import com.trabalho.projeto.dto.LoginDto;
 import com.trabalho.projeto.service.LoginService;
 
 
-@RequestMapping(value = "/login")
+/**
+ * Controlador para login
+ */
 @RestController
+@RequestMapping(value = "/login")
 public class LoginController {
     
     @Autowired
     LoginService loginService;
 
+    /**
+     * Login
+     * @param loginDto Insira login e senha:
+     */
     @PostMapping
     public ResponseEntity<String> postMethodName(@RequestBody LoginDto loginDto) {
         String token = loginService.fazerLogin(loginDto);

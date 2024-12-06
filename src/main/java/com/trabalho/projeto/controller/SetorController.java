@@ -20,6 +20,9 @@ import com.trabalho.projeto.model.Grupo;
 import com.trabalho.projeto.model.Setor;
 import com.trabalho.projeto.service.SetorService;
 
+/**
+ * Controlador para setores
+ */
 @RestController
 @RequestMapping(value = "/setor")
 public class SetorController {
@@ -27,6 +30,10 @@ public class SetorController {
     @Autowired
     SetorService setorService;
 
+    /**
+     * Adicionar setor
+     * @param nomeSetor Insira o nome do novo setor:
+     */
     @PostMapping()
     public ResponseEntity<Setor> adicionarSetor(@RequestParam String nomeSetor) {
         Setor setor = setorService.adicionarSetor(nomeSetor);
@@ -34,6 +41,10 @@ public class SetorController {
         return ResponseEntity.ok().body(setor);
     }
 
+    /**
+     * Editar setor
+     * @param setorEditado Editor de setor:
+     */
     @PutMapping()
     public ResponseEntity<Setor> editarSetor(@RequestBody Setor setorEditado) {
         Setor setor = setorService.editarSetor(setorEditado);
@@ -41,12 +52,19 @@ public class SetorController {
         return ResponseEntity.ok().body(setor);
     }
 
+    /**
+     * Visualizar todos os setores
+     */
     @GetMapping
     public ResponseEntity<List<Setor>> vizualizarSetores() {
         List<Setor> setores = setorService.listarSetores();
         return ResponseEntity.ok().body(setores);
     }
 
+    /**
+     * Deletar setor
+     * @param id Id do setor a ser deletado:
+     */
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<MensagemDTO> deletarSetores(@PathVariable int id) {
         try {
@@ -58,6 +76,10 @@ public class SetorController {
         return ResponseEntity.ok().body(new MensagemDTO("OK", "OK"));
     }
 
+    /**
+     * Vincular um grupo ao setor
+     * @param setorGrupoDto Editor para vinculacao:
+     */
     @PutMapping("/vincular-grupo")
     public ResponseEntity<MensagemDTO> vincularGrupo(@RequestBody SetorGrupoDto setorGrupoDto) {
         setorService.vincularGrupo(setorGrupoDto);
@@ -66,6 +88,10 @@ public class SetorController {
                 + "\" vinculado ao setor \"" + setorGrupoDto.getIdSetor() + "\"."));
     }
 
+    /**
+     * talvez tenha q tirar esse
+     * @param idSetor
+     */
     @GetMapping("/grupos/{idSetor}")
     public ResponseEntity<List<Grupo>> vizualizarSetores(@PathVariable int idSetor) {
         List<Grupo> grupos = setorService.listarGrupos(idSetor);

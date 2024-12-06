@@ -30,7 +30,7 @@ public class CategoriaController {
 
     /**
      * Adicionar categoria
-     * @param categoriaNova Digite o nome da nova categoria
+     * @param categoriaNova Insira o nome da nova categoria:
      */
     @PostMapping
     public ResponseEntity<Categoria> adicionarCategoria(@RequestParam String categoriaNova) {
@@ -73,7 +73,7 @@ public class CategoriaController {
 
     /**
      * Buscar categoria
-     * @param id Id da categoria que deseja encontrar
+     * @param id Id da categoria que deseja encontrar:
      */
     @GetMapping("/{id}")
     public ResponseEntity<Categoria> vizualizarCategoria(@RequestParam int id) {
@@ -83,7 +83,7 @@ public class CategoriaController {
 
     /**
      * Deletar categoria
-     * @param id Id da categoria a ser deletada
+     * @param id Id da categoria a ser deletada:
      */
     @DeleteMapping("/{id}")
     public ResponseEntity<MensagemDTO> deletarCategoria(@RequestParam int id) {
