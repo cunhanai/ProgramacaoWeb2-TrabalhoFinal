@@ -30,7 +30,7 @@ public class GrupoService {
     }
 
     public Grupo editarGrupo(Grupo grupoEditado) {
-        Grupo grupo = buscarGrupoPorId(grupoEditado.getId());
+        Grupo grupo = buscarGrupoPorId(grupoEditado.getIdGrupo());
 
         if (!grupoEditado.getNome().isBlank()) {
             grupo.setNome(grupoEditado.getNome());

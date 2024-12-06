@@ -33,7 +33,7 @@ public class Grupo implements Serializable{
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Integer idGrupo;
 
     @NotBlank(message = "Nome do grupo não pode ser nulo!")
     @NotEmpty(message = "Nome do grupo não pode ser branco!")
@@ -53,7 +53,7 @@ public class Grupo implements Serializable{
     private Setor setorGrupos;
 
     public Grupo(String nomeGrupo) {
-        setId(null);
+        setIdGrupo(null);
         setNome(nomeGrupo);
     }
 }
