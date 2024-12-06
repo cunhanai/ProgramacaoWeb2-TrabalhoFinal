@@ -9,6 +9,7 @@ import com.trabalho.projeto.dto.TarefasCategoriaDto;
 import com.trabalho.projeto.dto.TarefasDto;
 import com.trabalho.projeto.model.Categoria;
 import com.trabalho.projeto.model.Tarefas;
+import com.trabalho.projeto.model.Usuario;
 import com.trabalho.projeto.repository.TarefasRepository;
 
 @Service
@@ -25,7 +26,11 @@ public class TarefasService {
 
     public Tarefas adicionarTarefas(TarefasDto tarefasDto) {
         usuarioService.verificarUsuarioLogado();
+
         Tarefas tarefas =  new Tarefas(tarefasDto);
+        Usuario usuario = usuarioService.buscarUsuarioLogado();
+
+        tarefas.adicionarUsuario(usuario);
 
         if (tarefasDto.getIdCategoria() > 0) {
             Categoria categoria = categoriaService.buscarCategoria(tarefasDto.getIdCategoria());
@@ -72,6 +77,28 @@ public class TarefasService {
         Categoria categoria = categoriaService.buscarCategoria(tarefasCategoriaDto.getIdCategoria());
 
         tarefa.adicionarCategoria(categoria);
+        tarefasRepository.save(tarefa);
+    }
+
+    public void vincularUsuario(int tarefaId, int usuarioId) {
+        usuarioService.verificarUsuarioLogado();
+
+        Tarefas tarefa = buscarTarefa(tarefaId);
+        Usuario usuario = usuarioService.buscarUsuario(usuarioId);
+
+        tarefa.adicionarUsuario(usuario);
+        tarefasRepository.save(tarefa);
+
+        throw new UnsupportedOperationException("Unimplemented method 'adicionarUsuario'");
+    }
+
+    public void desvincularUsuario(int tarefaId, int usuarioId) {
+        usuarioService.verificarUsuarioLogado();
+
+        Tarefas tarefa = buscarTarefa(tarefaId);
+        Usuario usuario = usuarioService.buscarUsuario(usuarioId);
+
+        tarefa.removerUsuario(usuario);
         tarefasRepository.save(tarefa);
     }
 

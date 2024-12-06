@@ -3,6 +3,7 @@ package com.trabalho.projeto.model;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import org.hibernate.validator.constraints.Length;
 
@@ -73,5 +74,12 @@ public class Tarefas implements Serializable{
             usuarios = new ArrayList<Usuario>();
 
         usuarios.add(usuario);
+    }
+
+    public void removerUsuario(Usuario usuario) {
+        if (usuarios == null || !usuarios.contains(usuario))
+            throw new NoSuchElementException("Tarefa não vinculada ao usuário!");
+
+        usuarios.remove(usuario);
     }
 }

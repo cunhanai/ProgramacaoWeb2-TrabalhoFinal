@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,10 +17,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.trabalho.projeto.dto.MensagemDTO;
 import com.trabalho.projeto.dto.TarefasCategoriaDto;
 import com.trabalho.projeto.dto.TarefasDto;
+import com.trabalho.projeto.dto.UsuarioTarefaDto;
 import com.trabalho.projeto.model.Tarefas;
 import com.trabalho.projeto.service.TarefasService;
 
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
 
 @RequestMapping(value = "/tarefas")
 @RestController
@@ -65,10 +66,23 @@ public class TarefasController {
         return ResponseEntity.ok().body(new MensagemDTO("OK", "OK"));
     }
 
-        @PutMapping("/vincular-categoria")
+    @PutMapping("/vincular-categoria")
     public ResponseEntity<MensagemDTO> vincularCategoria(@RequestBody TarefasCategoriaDto tarefasCategoriaDto) {
         tarefasService.vincularCategoria(tarefasCategoriaDto);
         
         return ResponseEntity.ok().body(new MensagemDTO("OK", "Categoria \"" + tarefasCategoriaDto.getIdCategoria() + "\" vinculada a tarefa \"" + tarefasCategoriaDto.getIdTarefa() + "\"."));
+    }
+
+    @PostMapping("/vincular-usuario")
+    public ResponseEntity<UsuarioTarefaDto> vincularUsuario(@RequestBody UsuarioTarefaDto usuarioTarefas) {
+        tarefasService.vincularUsuario(usuarioTarefas.getTarefaId(), usuarioTarefas.getUsuarioId());
+        return ResponseEntity.ok().body(usuarioTarefas);
+    }
+    
+    
+    @PostMapping("/desvincular-usuario")
+    public ResponseEntity<MensagemDTO> desvincularUsuario(@RequestBody UsuarioTarefaDto usuarioTarefas) {
+        tarefasService.desvincularUsuario(usuarioTarefas.getTarefaId(), usuarioTarefas.getUsuarioId());
+        return ResponseEntity.ok().body(new MensagemDTO("OK", "OK"));
     }
 }

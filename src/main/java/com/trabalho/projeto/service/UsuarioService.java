@@ -77,8 +77,8 @@ public class UsuarioService {
     }
 
     public void verificarUsuarioLogado() {
-        Usuario usuarioLogado = usuarioRepository.findOneByIsLogadoTrue();
-
+        Usuario usuarioLogado = buscarUsuarioLogado();
+        
         if (usuarioLogado == null)
             throw new LoginException("Nenhum usuário logado encontrado!");
 
@@ -86,5 +86,9 @@ public class UsuarioService {
 
     public List<Usuario> buscarUsuarioPorGrupo(int idGrupo) {
         return usuarioRepository.findUsuarioByGrupoUsuario_Id(idGrupo);
+    }
+
+    public Usuario buscarUsuarioLogado() {
+        return usuarioRepository.findOneByIsLogadoTrue();
     }
 }

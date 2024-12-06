@@ -1,5 +1,7 @@
 package com.trabalho.projeto.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -51,4 +53,27 @@ public class CategoriaService {
         categoriaRepository.save(categoria);
 
     }
+
+    public List<Categoria> vizualizarCategorias() {
+        usuarioService.verificarUsuarioLogado();
+        return categoriaRepository.findAll();
+    }
+
+    public Categoria editarCategoria(Categoria categoriaEditada) {
+        Categoria categoria = buscarCategoria(categoriaEditada.getIdCategoria());
+
+        if (!categoriaEditada.getTituloCategoria().isBlank())
+        {
+            categoria.setTituloCategoria(categoriaEditada.getTituloCategoria());
+            categoriaRepository.save(categoria);
+        }
+
+        return categoria;
+    }
+
+    public void deletarCategoria(int id) {
+        Categoria categoria = buscarCategoria(id);
+        categoriaRepository.delete(categoria);
+    }
+
 }
