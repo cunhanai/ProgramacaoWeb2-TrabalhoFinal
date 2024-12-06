@@ -53,10 +53,13 @@ public class TarefasService {
 
     public Tarefas buscarTarefa(int idTarefa) {
         usuarioService.verificarUsuarioLogado();
+
+        Usuario usuarioLogado = usuarioService.buscarUsuarioLogado();
+
         return tarefasRepository
-            .findById(idTarefa)
+            .findOneByIdTarefaAndUsuarios_IdUsuario(idTarefa, usuarioLogado.getIdUsuario())
             .orElseThrow(
-                () -> new com.trabalho.projeto.exception.NoSuchElementException("Tarefa " + idTarefa +" não encontrado!")
+                () -> new com.trabalho.projeto.exception.NoSuchElementException("Tarefa " + idTarefa +" não encontrada ou não vinculada ao usuário!!")
             );
     }
 
@@ -68,7 +71,9 @@ public class TarefasService {
 
     public List<Tarefas> listarTarefas() {
         usuarioService.verificarUsuarioLogado();
-        return tarefasRepository.findAll();
+        Usuario usuario = usuarioService.buscarUsuarioLogado();
+
+        return tarefasRepository.findTarefasByUsuarios_IdUsuario(usuario.getIdUsuario());
     }
 
     public void vincularCategoria(TarefasCategoriaDto tarefasCategoriaDto) {
