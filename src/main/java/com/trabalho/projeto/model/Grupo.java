@@ -50,7 +50,6 @@ public class Grupo implements Serializable{
 
     @ManyToOne
     @JoinColumn(name = "idSetor")
-    @JsonIgnore
     private Setor setorGrupos;
 
     public Grupo(String nomeGrupo) {

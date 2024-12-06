@@ -9,6 +9,7 @@ import com.trabalho.projeto.dto.SetorGrupoDto;
 import com.trabalho.projeto.exception.DataIntegrityViolationException;
 import com.trabalho.projeto.model.Grupo;
 import com.trabalho.projeto.model.Setor;
+import com.trabalho.projeto.repository.GrupoRepository;
 import com.trabalho.projeto.repository.SetorRepository;
 
 @Service
@@ -19,6 +20,9 @@ public class SetorService {
 
     @Autowired
     GrupoService grupoService;
+
+    @Autowired
+    GrupoRepository grupoRepository;
 
     @Autowired
     private SetorRepository setorRepository;
@@ -33,6 +37,14 @@ public class SetorService {
 
     public void deletarSetor(int id) {
         Setor setor = buscarSetorPorId(id);
+
+        List<Grupo> grupos = setor.getGrupos();
+        
+        for (Grupo grupo : grupos)
+            grupo.setSetorGrupos(null);
+
+        grupoRepository.saveAll(grupos);
+
         setorRepository.delete(setor);
     }
 
@@ -75,8 +87,8 @@ public class SetorService {
         Setor setor = buscarSetorPorId(setorGrupoDto.getIdSetor());
         Grupo grupo = grupoService.buscarGrupoPorId(setorGrupoDto.getIdGrupo());
 
-        setor.adicionarGrupo(grupo);
-        setorRepository.save(setor);
+        grupo.setSetorGrupos(setor);
+        grupoRepository.save(grupo);
     }
 
     public List<Grupo> listarGrupos(int idGrupo) {
