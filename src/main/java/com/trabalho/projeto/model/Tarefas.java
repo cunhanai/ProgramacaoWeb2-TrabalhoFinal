@@ -7,15 +7,16 @@ import java.util.NoSuchElementException;
 
 import org.hibernate.validator.constraints.Length;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.trabalho.projeto.dto.TarefasDto;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.UniqueConstraint;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
@@ -50,8 +51,16 @@ public class Tarefas implements Serializable{
     @ManyToMany(mappedBy = "tarefas")
     private List<Categoria> categorias;
 
-    @OneToMany(mappedBy = "tarefas")
-    @JsonIgnore
+    @ManyToMany
+    @JoinTable(
+        name = "tarefa_usuario",
+        joinColumns = @JoinColumn(name="idUsuario"),
+        inverseJoinColumns = @JoinColumn(name="idTarefa"),
+        uniqueConstraints = @UniqueConstraint(
+            name="tarefa_usuario_unique",
+            columnNames = {"idTarefa", "idUsuario"}
+        )
+    )
     private List<Usuario> usuarios;
 
     public Tarefas(TarefasDto tarefasDto) {
@@ -71,9 +80,10 @@ public class Tarefas implements Serializable{
 
     public void adicionarUsuario(Usuario usuario) {
         if (usuarios == null)
-            usuarios = new ArrayList<Usuario>();
+            usuarios = new ArrayList<>();
 
-        usuarios.add(usuario);
+        if (!usuarios.contains(usuario))
+            usuarios.add(usuario);
     }
 
     public void removerUsuario(Usuario usuario) {

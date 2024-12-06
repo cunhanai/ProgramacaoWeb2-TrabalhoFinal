@@ -3,7 +3,6 @@ package com.trabalho.projeto.model;
 import java.io.Serializable;
 import java.util.List;
 
-import org.hibernate.annotations.ManyToAny;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
@@ -16,9 +15,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.UniqueConstraint;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
@@ -67,16 +65,7 @@ public class Usuario implements Serializable{
     @JsonIgnore
     private Grupo grupoUsuario;
 
-    @ManyToAny
-    @JoinTable(
-        name = "tarefa_usuario",
-        joinColumns = @JoinColumn(name="idTarefa"),
-        inverseJoinColumns = @JoinColumn(name="idUsuario"),
-        uniqueConstraints = @UniqueConstraint(
-            name="tarefa_usuario_unique",
-            columnNames = {"idUsuario","idTarefa"}
-        )
-    )
+    @ManyToMany(mappedBy="usuarios")
     @JsonIgnore
     private List<Tarefas> tarefas;
 

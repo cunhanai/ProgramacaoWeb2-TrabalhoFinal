@@ -88,15 +88,13 @@ public class TarefasService {
 
         tarefa.adicionarUsuario(usuario);
         tarefasRepository.save(tarefa);
-
-        throw new UnsupportedOperationException("Unimplemented method 'adicionarUsuario'");
     }
 
     public void desvincularUsuario(int tarefaId, int usuarioId) {
         usuarioService.verificarUsuarioLogado();
+        Usuario usuario = usuarioService.buscarUsuario(usuarioId);
 
         Tarefas tarefa = buscarTarefa(tarefaId);
-        Usuario usuario = usuarioService.buscarUsuario(usuarioId);
 
         tarefa.removerUsuario(usuario);
         tarefasRepository.save(tarefa);

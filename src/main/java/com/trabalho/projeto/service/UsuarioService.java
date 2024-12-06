@@ -1,5 +1,6 @@
 package com.trabalho.projeto.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +10,9 @@ import org.springframework.stereotype.Service;
 import com.trabalho.projeto.dto.UsuarioDto;
 import com.trabalho.projeto.dto.UsuarioEditadoDto;
 import com.trabalho.projeto.exception.LoginException;
+import com.trabalho.projeto.model.Tarefas;
 import com.trabalho.projeto.model.Usuario;
+import com.trabalho.projeto.repository.TarefasRepository;
 import com.trabalho.projeto.repository.UsuarioRepository;
 
 @Service
@@ -18,6 +21,9 @@ public class UsuarioService {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
+    @Autowired
+    private TarefasRepository tarefasRepository;
+
     public Usuario adicionarUsuario(UsuarioDto usuarioDto) {
         Usuario usuario = converterDtoEmEntidade(usuarioDto);
         return usuarioRepository.save(usuario);
@@ -25,6 +31,22 @@ public class UsuarioService {
 
     public void deletarUsuario(int id) {
         Usuario usuario = buscarUsuario(id);
+        List<Tarefas> tarefasExclusao = new ArrayList<>();
+        List<Tarefas> tarefasAlteradas = new ArrayList<>();
+
+        for (Tarefas tarefa : usuario.getTarefas()) {
+            if (tarefa.getUsuarios().size() > 1) {
+                tarefa.removerUsuario(usuario);
+                tarefasAlteradas.add(tarefa);
+            }
+            else {
+                tarefasExclusao.add(tarefa);
+            }
+        }
+
+        tarefasRepository.saveAll(tarefasAlteradas);
+        tarefasRepository.deleteAll(tarefasExclusao);
+
         usuarioRepository.delete(usuario);
     }
 
