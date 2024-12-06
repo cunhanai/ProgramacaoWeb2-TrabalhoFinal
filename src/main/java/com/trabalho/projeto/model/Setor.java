@@ -49,7 +49,7 @@ public class Setor implements Serializable {
 
     public void adicionarGrupo(Grupo grupo) {
         if (grupos == null)
-            grupos = new ArrayList<Grupo>();
+            grupos = new ArrayList<>();
 
         grupos.add(grupo);
     }
