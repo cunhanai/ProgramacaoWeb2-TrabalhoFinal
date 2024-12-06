@@ -107,7 +107,7 @@ public class UsuarioService {
     }
 
     public List<Usuario> buscarUsuarioPorGrupo(int idGrupo) {
-        return usuarioRepository.findUsuarioByGrupoUsuario_Id(idGrupo);
+        return usuarioRepository.findUsuarioByGrupoUsuario_IdGrupo(idGrupo);
     }
 
     public Usuario buscarUsuarioLogado() {
