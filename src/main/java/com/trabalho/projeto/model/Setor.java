@@ -6,6 +6,8 @@ import java.util.List;
 
 import org.hibernate.validator.constraints.Length;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -34,8 +36,21 @@ public class Setor implements Serializable {
     @NotNull(message = "Nome do setor não pode ser nulo!")
     @NotBlank(message = "Nome do setor não pode ser branco!")
     @Length(min = 5, max = 255, message = "Nome do setor deve ter entre 5 e 255 caracteres!")
-    private String nomeSetor;
+    private String nome;
 
     @OneToMany(mappedBy="setorGrupos")
-    //private List<> funcionarios = new ArrayList<>();
+    @JsonIgnore
+    private List<Grupo> grupos;
+    
+    public Setor(String nomeSetor) {
+        setIdSetor(null);
+        setNome(nomeSetor);
+    }
+
+    public void adicionarGrupo(Grupo grupo) {
+        if (grupos == null)
+            grupos = new ArrayList<Grupo>();
+
+        grupos.add(grupo);
+    }
 }

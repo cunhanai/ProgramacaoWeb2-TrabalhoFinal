@@ -6,4 +6,5 @@ import com.trabalho.projeto.model.Setor;
 
 public interface SetorRepository extends JpaRepository<Setor,Integer> {
 
+    Setor findOneByNome(String nome);
 }

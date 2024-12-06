@@ -7,11 +7,9 @@ import org.springframework.stereotype.Service;
 
 import com.trabalho.projeto.dto.GrupoUsuarioDto;
 import com.trabalho.projeto.exception.DataIntegrityViolationException;
-import com.trabalho.projeto.exception.LoginException;
 import com.trabalho.projeto.model.Grupo;
 import com.trabalho.projeto.model.Usuario;
 import com.trabalho.projeto.repository.GrupoRepository;
-import com.trabalho.projeto.repository.UsuarioRepository;
 
 @Service
 public class GrupoService {
@@ -78,5 +76,9 @@ public class GrupoService {
     public List<Usuario> listarUsuarios(int idGrupo) {
         usuarioService.verificarUsuarioLogado();
         return usuarioService.buscarUsuarioPorGrupo(idGrupo);
+    }
+
+    public List<Grupo> buscarGrupoPorSetor(int idSetor) {
+        return grupoRepository.findGrupoBySetorGrupos_IdSetor(idSetor);
     }
 }

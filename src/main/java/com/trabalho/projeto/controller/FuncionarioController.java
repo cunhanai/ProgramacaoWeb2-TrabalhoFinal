@@ -1,5 +1,5 @@
 package com.trabalho.projeto.controller;
-
+/* 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -21,9 +21,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PutMapping;
 
 @RestController
-@RequestMapping(value = "/funcionario")
+@RequestMapping(value = "/funcionario") */
 public class FuncionarioController {
-
+/* 
     @Autowired
     private FuncionarioService funcionarioService;
 
@@ -67,5 +67,5 @@ public class FuncionarioController {
     public ResponseEntity<MensagemDTO> delFuncionario(@PathVariable Integer pIdFuncionario) {
         funcionarioService.delFuncionario(pIdFuncionario);
         return ResponseEntity.ok().body(new MensagemDTO("Ok", "Funcionário "+pIdFuncionario+" deletado com sucesso!"));
-    }
+    } */
 }

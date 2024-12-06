@@ -1,5 +1,5 @@
 package com.trabalho.projeto.service;
-
+/*
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,12 +7,12 @@ import org.springframework.stereotype.Service;
 
 import com.trabalho.projeto.model.Funcionario;
 import com.trabalho.projeto.model.Setor;
-import com.trabalho.projeto.repository.DepartamentoRepository;
+//import com.trabalho.projeto.repository.DepartamentoRepository;
 import com.trabalho.projeto.repository.FuncionarioRepository;
 
-@Service
+@Service*/
 public class FuncionarioService {
-
+/*
     @Autowired
     private FuncionarioRepository funcionarioRepository;
 
@@ -90,4 +90,5 @@ public class FuncionarioService {
     public List<Funcionario> searchByNome(String pNome) {
         return funcionarioRepository.searchByNome(pNome);
     }
+        */
 }
