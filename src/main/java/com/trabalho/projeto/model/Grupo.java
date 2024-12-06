@@ -1,7 +1,6 @@
 package com.trabalho.projeto.model;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.validator.constraints.Length;
@@ -57,12 +56,5 @@ public class Grupo implements Serializable{
     public Grupo(String nomeGrupo) {
         setId(null);
         setNome(nomeGrupo);
-    }
-
-    public void adicionarUsuario(Usuario usuario) {
-        if (usuarios == null)
-            usuarios = new ArrayList<Usuario>();
-
-        usuarios.add(usuario);
     }
 }

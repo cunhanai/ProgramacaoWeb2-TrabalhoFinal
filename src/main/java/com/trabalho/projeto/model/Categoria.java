@@ -42,16 +42,7 @@ public class Categoria implements Serializable {
     @Length(min = 3, max = 255, message = "Título da categoria deve ter entre 3 e 255 caracteres!")
     private String tituloCategoria;
 
-    @ManyToMany
-    @JoinTable(
-        name = "tarefas_categoria",
-        joinColumns = @JoinColumn(name="idCategoria"),
-        inverseJoinColumns = @JoinColumn(name="idTarefas"),
-        uniqueConstraints = @UniqueConstraint(
-            name="tarefas_categoria_unique",
-            columnNames = {"idCategoria","idTarefas"}
-        )
-    )
+    @ManyToMany(mappedBy = "categorias")
     @JsonIgnore
     private List<Tarefas> tarefas;
 
@@ -65,7 +56,6 @@ public class Categoria implements Serializable {
             columnNames = {"idCategoria","idGrupo"}
         )
     )
-    @JsonIgnore
     private List<Grupo> grupos;
 
     public Categoria(CategoriaDto categoriaDto) {
@@ -78,5 +68,9 @@ public class Categoria implements Serializable {
             grupos = new ArrayList<Grupo>();
 
         grupos.add(grupo);
+    }
+
+    public void removerTarefas() {
+        tarefas = null;
     }
 }

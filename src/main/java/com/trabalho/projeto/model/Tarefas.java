@@ -48,7 +48,16 @@ public class Tarefas implements Serializable{
 
     private boolean concluidaTarefa;
     
-    @ManyToMany(mappedBy = "tarefas")
+    @ManyToMany
+    @JoinTable(
+        name = "tarefas_categoria",
+        joinColumns = @JoinColumn(name="idTarefas"),
+        inverseJoinColumns = @JoinColumn(name="idCategoria"),
+        uniqueConstraints = @UniqueConstraint(
+            name="tarefas_categoria_unique",
+            columnNames = {"idTarefas", "idCategoria"}
+        )
+    )
     private List<Categoria> categorias;
 
     @ManyToMany
@@ -91,5 +100,9 @@ public class Tarefas implements Serializable{
             throw new NoSuchElementException("Tarefa não vinculada ao usuário!");
 
         usuarios.remove(usuario);
+    }
+
+    public void removerCategoria(Categoria categoria) {
+        categorias.remove(categoria);
     }
 }

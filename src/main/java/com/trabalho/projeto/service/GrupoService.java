@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.trabalho.projeto.dto.GrupoUsuarioDto;
 import com.trabalho.projeto.exception.DataIntegrityViolationException;
+import com.trabalho.projeto.model.Categoria;
 import com.trabalho.projeto.model.Grupo;
 import com.trabalho.projeto.model.Usuario;
 import com.trabalho.projeto.repository.GrupoRepository;
@@ -69,7 +70,7 @@ public class GrupoService {
         Grupo grupo = buscarGrupoPorId(grupoUsuarioDto.getIdGrupo());
         Usuario usuario = usuarioService.buscarUsuario(grupoUsuarioDto.getIdUsuario());
 
-        grupo.adicionarUsuario(usuario);
+        usuario.setGrupoUsuario(grupo);
         grupoRepository.save(grupo);
     }
 
@@ -79,6 +80,13 @@ public class GrupoService {
     }
 
     public List<Grupo> buscarGrupoPorSetor(int idSetor) {
+        usuarioService.verificarUsuarioLogado();
         return grupoRepository.findGrupoBySetorGrupos_IdSetor(idSetor);
+    }
+
+    public List<Categoria> listarCategorias(int idGrupo) {
+        usuarioService.verificarUsuarioLogado();
+        Grupo grupo = buscarGrupoPorId(idGrupo);
+        return grupo.getCategorias();
     }
 }

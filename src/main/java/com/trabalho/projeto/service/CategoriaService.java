@@ -9,7 +9,10 @@ import com.trabalho.projeto.dto.CategoriaDto;
 import com.trabalho.projeto.dto.GrupoCategoriaDto;
 import com.trabalho.projeto.model.Categoria;
 import com.trabalho.projeto.model.Grupo;
+import com.trabalho.projeto.model.Tarefas;
+import com.trabalho.projeto.model.Usuario;
 import com.trabalho.projeto.repository.CategoriaRepository;
+import com.trabalho.projeto.repository.TarefasRepository;
 
 @Service
 public class CategoriaService {
@@ -23,9 +26,16 @@ public class CategoriaService {
     @Autowired
     private GrupoService grupoService;
 
+    @Autowired
+    private TarefasRepository tarefasRepository;
+
     public Categoria adicionarCategoria(CategoriaDto categoriaDto) {
         usuarioService.verificarUsuarioLogado();
+        Usuario usuario = usuarioService.buscarUsuarioLogado();
+        
         Categoria categoria = converterDtoEmEntidade(categoriaDto);
+        categoria.adicionarGrupo(usuario.getGrupoUsuario());
+
         return categoriaRepository.save(categoria);
     }
 
@@ -51,7 +61,6 @@ public class CategoriaService {
 
         categoria.adicionarGrupo(grupo);
         categoriaRepository.save(categoria);
-
     }
 
     public List<Categoria> vizualizarCategorias() {
@@ -73,6 +82,13 @@ public class CategoriaService {
 
     public void deletarCategoria(int id) {
         Categoria categoria = buscarCategoria(id);
+        List<Tarefas> tarefas = categoria.getTarefas();
+
+        for (Tarefas tarefa : tarefas)
+            tarefa.removerCategoria(categoria);
+        
+        tarefasRepository.saveAll(tarefas);
+
         categoriaRepository.delete(categoria);
     }
 

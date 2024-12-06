@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PutMapping;
 
+import com.trabalho.projeto.model.Categoria;
 import com.trabalho.projeto.model.Grupo;
 import com.trabalho.projeto.model.Usuario;
 
@@ -72,9 +73,16 @@ public class GrupoController {
         return ResponseEntity.ok().body(new MensagemDTO("OK", "Usuário \"" + grupoUsuarioDto.getIdUsuario() + "\" vinculado ao grupo \"" + grupoUsuarioDto.getIdGrupo() + "\"."));
     }
 
-    @GetMapping("/usuarios/{idGrupo}") 
+    @GetMapping("/{idGrupo}/usuarios") 
     public ResponseEntity<List<Usuario>> vizualizarGrupos(@PathVariable int idGrupo) {
         List<Usuario> usuarios = grupoService.listarUsuarios(idGrupo);
         return ResponseEntity.ok().body(usuarios);
     }
+
+    @GetMapping("/{idGrupo}/categorias")
+    public ResponseEntity<List<Categoria>> getMethodName(@PathVariable int idGrupo) {
+        List<Categoria> categoria = grupoService.listarCategorias(idGrupo);
+        return ResponseEntity.ok().body(categoria);
+    }
+    
 }

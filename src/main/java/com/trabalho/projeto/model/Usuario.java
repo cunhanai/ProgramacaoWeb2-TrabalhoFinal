@@ -62,7 +62,6 @@ public class Usuario implements Serializable{
 
     @ManyToOne
     @JoinColumn(name = "idGrupo")
-    @JsonIgnore
     private Grupo grupoUsuario;
 
     @ManyToMany(mappedBy="usuarios")
