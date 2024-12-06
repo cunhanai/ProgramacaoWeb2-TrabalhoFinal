@@ -7,7 +7,6 @@ import java.util.List;
 import org.hibernate.validator.constraints.Length;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.trabalho.projeto.dto.CategoriaDto;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -32,7 +31,7 @@ import lombok.Setter;
 @EqualsAndHashCode
 @Entity
 public class Categoria implements Serializable {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idCategoria;
@@ -47,20 +46,13 @@ public class Categoria implements Serializable {
     private List<Tarefas> tarefas;
 
     @ManyToMany
-    @JoinTable(
-        name = "grupo_categoria",
-        joinColumns = @JoinColumn(name="idCategoria"),
-        inverseJoinColumns = @JoinColumn(name="idGrupo"),
-        uniqueConstraints = @UniqueConstraint(
-            name="grupo_categoria_unique",
-            columnNames = {"idCategoria","idGrupo"}
-        )
-    )
+    @JoinTable(name = "grupo_categoria", joinColumns = @JoinColumn(name = "idCategoria"), inverseJoinColumns = @JoinColumn(name = "idGrupo"), uniqueConstraints = @UniqueConstraint(name = "grupo_categoria_unique", columnNames = {
+            "idCategoria", "idGrupo" }))
     private List<Grupo> grupos;
 
-    public Categoria(CategoriaDto categoriaDto) {
+    public Categoria(String categoria) {
         setIdCategoria(null);
-        setTituloCategoria(categoriaDto.getTituloCategoria());
+        setTituloCategoria(categoria);
     }
 
     public void adicionarGrupo(Grupo grupo) {

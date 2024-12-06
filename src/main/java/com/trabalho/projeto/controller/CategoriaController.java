@@ -13,52 +13,83 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.trabalho.projeto.dto.CategoriaDto;
+import com.trabalho.projeto.dto.GrupoCategoriaDto;
 import com.trabalho.projeto.dto.MensagemDTO;
 import com.trabalho.projeto.model.Categoria;
 import com.trabalho.projeto.service.CategoriaService;
 
-
-
-@RequestMapping(value = "/categoria")
+/**
+* Controlador para categorias
+*/
 @RestController
+@RequestMapping(value = "/categoria")
 public class CategoriaController {
 
     @Autowired
     CategoriaService categoriaService;
 
+    /**
+     * Adicionar categoria
+     * @param categoriaNova Digite o nome da nova categoria
+     */
     @PostMapping
-    public ResponseEntity<Categoria> adicionarCategoria(@RequestBody CategoriaDto categoriaDto) {
-        Categoria categoria = categoriaService.adicionarCategoria(categoriaDto);
+    public ResponseEntity<Categoria> adicionarCategoria(@RequestParam String categoriaNova) {
+        Categoria categoria = categoriaService.adicionarCategoria(categoriaNova);
         return ResponseEntity.ok().body(categoria);
     }
 
+    /**
+     * Visualizar todas as categorias cadastradas
+     */
     @GetMapping()
     public ResponseEntity<List<Categoria>> vizualizarCategorias() {
         List<Categoria> categorias = categoriaService.vizualizarCategorias();
 
         return ResponseEntity.ok().body(categorias);
     }
-    
+
+    /**
+     * Editar categoria
+     * @param categoriaEditada Editor da categoria:
+     */
     @PutMapping()
     public ResponseEntity<Categoria> editarCategoria(@RequestBody Categoria categoriaEditada) {
         Categoria categoria = categoriaService.editarCategoria(categoriaEditada);
-        
+
         return ResponseEntity.ok().body(categoria);
     }
 
+    /**
+     * Vincular grupo
+     * @param grupoCategoriaDto Vincular um grupo a categoria:
+     */
+    @PutMapping("vincular-grupo")
+    public ResponseEntity<MensagemDTO> vincularGrupo(@RequestBody GrupoCategoriaDto grupoCategoriaDto) {
+        categoriaService.vincularGrupo(grupoCategoriaDto);
+
+        return ResponseEntity.ok().body(new MensagemDTO("OK", "Grupo \"" + grupoCategoriaDto.getIdGrupo()
+                + "\" vinculado a categoria \"" + grupoCategoriaDto.getIdCategoria() + "\"."));
+    }
+
+    /**
+     * Buscar categoria
+     * @param id Id da categoria que deseja encontrar
+     */
     @GetMapping("/{id}")
     public ResponseEntity<Categoria> vizualizarCategoria(@RequestParam int id) {
-        Categoria categoria = categoriaService.buscarCategoria(id);
+        Categoria categoria = categoriaService.buscarCategoriaPorId(id);
         return ResponseEntity.ok().body(categoria);
     }
 
+    /**
+     * Deletar categoria
+     * @param id Id da categoria a ser deletada
+     */
     @DeleteMapping("/{id}")
     public ResponseEntity<MensagemDTO> deletarCategoria(@RequestParam int id) {
         try {
             categoriaService.deletarCategoria(id);
-        }
-        catch (com.trabalho.projeto.exception.NoSuchElementException e) {
+        } catch (com.trabalho.projeto.exception.NoSuchElementException e) {
             return ResponseEntity.ok().body(new MensagemDTO("ERRO", e.getMessage()));
         }
 

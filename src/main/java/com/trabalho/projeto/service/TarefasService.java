@@ -33,7 +33,7 @@ public class TarefasService {
         tarefas.adicionarUsuario(usuario);
 
         if (tarefasDto.getIdCategoria() > 0) {
-            Categoria categoria = categoriaService.buscarCategoria(tarefasDto.getIdCategoria());
+            Categoria categoria = categoriaService.buscarCategoriaPorId(tarefasDto.getIdCategoria());
             tarefas.adicionarCategoria(categoria);
         }
 
@@ -79,7 +79,7 @@ public class TarefasService {
     public void vincularCategoria(TarefasCategoriaDto tarefasCategoriaDto) {
         usuarioService.verificarUsuarioLogado();
         Tarefas tarefa = buscarTarefa(tarefasCategoriaDto.getIdTarefa());
-        Categoria categoria = categoriaService.buscarCategoria(tarefasCategoriaDto.getIdCategoria());
+        Categoria categoria = categoriaService.buscarCategoriaPorId(tarefasCategoriaDto.getIdCategoria());
 
         tarefa.adicionarCategoria(categoria);
         tarefasRepository.save(tarefa);

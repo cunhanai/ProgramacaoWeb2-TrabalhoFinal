@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.trabalho.projeto.dto.CategoriaDto;
 import com.trabalho.projeto.dto.GrupoCategoriaDto;
 import com.trabalho.projeto.model.Categoria;
 import com.trabalho.projeto.model.Grupo;
@@ -29,22 +28,17 @@ public class CategoriaService {
     @Autowired
     private TarefasRepository tarefasRepository;
 
-    public Categoria adicionarCategoria(CategoriaDto categoriaDto) {
+    public Categoria adicionarCategoria(String categoriaNova) {
         usuarioService.verificarUsuarioLogado();
         Usuario usuario = usuarioService.buscarUsuarioLogado();
         
-        Categoria categoria = converterDtoEmEntidade(categoriaDto);
+        Categoria categoria = new Categoria(categoriaNova);
         categoria.adicionarGrupo(usuario.getGrupoUsuario());
 
         return categoriaRepository.save(categoria);
     }
 
-    private Categoria converterDtoEmEntidade(CategoriaDto categoriaDto) {
-        Categoria categoria = new Categoria(categoriaDto);
-        return categoria;
-    }
-
-    public Categoria buscarCategoria(Integer idCategoria) {
+    public Categoria buscarCategoriaPorId(Integer idCategoria) {
         usuarioService.verificarUsuarioLogado();
 
         return categoriaRepository
@@ -56,7 +50,7 @@ public class CategoriaService {
 
     public void vincularGrupo(GrupoCategoriaDto grupoCategoriaDto) {
         usuarioService.verificarUsuarioLogado();
-        Categoria categoria = buscarCategoria(grupoCategoriaDto.getIdCategoria());
+        Categoria categoria = buscarCategoriaPorId(grupoCategoriaDto.getIdCategoria());
         Grupo grupo = grupoService.buscarGrupoPorId(grupoCategoriaDto.getIdGrupo());
 
         categoria.adicionarGrupo(grupo);
@@ -69,7 +63,7 @@ public class CategoriaService {
     }
 
     public Categoria editarCategoria(Categoria categoriaEditada) {
-        Categoria categoria = buscarCategoria(categoriaEditada.getIdCategoria());
+        Categoria categoria = buscarCategoriaPorId(categoriaEditada.getIdCategoria());
 
         if (!categoriaEditada.getTituloCategoria().isBlank())
         {
@@ -81,7 +75,7 @@ public class CategoriaService {
     }
 
     public void deletarCategoria(int id) {
-        Categoria categoria = buscarCategoria(id);
+        Categoria categoria = buscarCategoriaPorId(id);
         List<Tarefas> tarefas = categoria.getTarefas();
 
         for (Tarefas tarefa : tarefas)
