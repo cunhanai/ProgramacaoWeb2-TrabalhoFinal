@@ -43,7 +43,7 @@ public class SetorController {
 
     /**
      * Editar setor
-     * @param setorEditado Editor de setor:
+     * @param setorEditado Editor para modificar um setor:
      */
     @PutMapping()
     public ResponseEntity<Setor> editarSetor(@RequestBody Setor setorEditado) {
@@ -78,7 +78,7 @@ public class SetorController {
 
     /**
      * Vincular um grupo ao setor
-     * @param setorGrupoDto Editor para vinculacao:
+     * @param setorGrupoDto Editor para vincular um grupo a um setor:
      */
     @PutMapping("/vincular-grupo")
     public ResponseEntity<MensagemDTO> vincularGrupo(@RequestBody SetorGrupoDto setorGrupoDto) {
@@ -92,7 +92,7 @@ public class SetorController {
      * talvez tenha q tirar esse
      * @param idSetor
      */
-    @GetMapping("/grupos/{idSetor}")
+    @GetMapping("/grupos/{id}")
     public ResponseEntity<List<Grupo>> vizualizarSetores(@PathVariable int idSetor) {
         List<Grupo> grupos = setorService.listarGrupos(idSetor);
         return ResponseEntity.ok().body(grupos);

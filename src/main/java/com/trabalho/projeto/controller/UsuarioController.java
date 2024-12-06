@@ -35,7 +35,7 @@ public class UsuarioController {
 
     /**
      * Adicionar usuario
-     * @param usuarioDto Insira dados para o cadastro do usuario:
+     * @param usuarioDto Editor para adicionar um usuario:
      */
     @PostMapping
     public ResponseEntity<Usuario> adicionarUsuario(@RequestBody UsuarioDto usuarioDto) {
@@ -44,8 +44,8 @@ public class UsuarioController {
     }
 
     /**
-     * Visualizar todos os usuarios
-     */
+     * Visualizar todos os usuarios cadastrados
+     */ 
     @GetMapping
     public ResponseEntity<List<Usuario>> vizualizarUsuarios() {
 
@@ -65,7 +65,7 @@ public class UsuarioController {
 
     /**
      * Editar usuario
-     * @param usuarioEditadoDto Editor de usuario:
+     * @param usuarioEditadoDto Editor para modificar um usuario:
      */
     @PutMapping
     public ResponseEntity<Usuario> editarUsuario(@RequestBody UsuarioEditadoDto usuarioEditadoDto) {

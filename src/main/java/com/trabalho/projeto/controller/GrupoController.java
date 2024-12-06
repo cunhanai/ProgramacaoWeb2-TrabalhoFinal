@@ -27,13 +27,20 @@ import com.trabalho.projeto.dto.MensagemDTO;
 
 
 
-@RequestMapping(value = "/grupo")
+/**
+ * Controlador para grupos
+ */
 @RestController
+@RequestMapping(value = "/grupo")
 public class GrupoController {
 
     @Autowired
     GrupoService grupoService;
 
+    /**
+     * Adicionar grupo
+     * @param nomeGrupo Insira o nome do novo grupo:
+     */
     @PostMapping()
     public ResponseEntity<Grupo> adicionarGrupo(@RequestParam String nomeGrupo) {
         Grupo grupo = grupoService.adicionarGrupo(nomeGrupo);
@@ -41,6 +48,10 @@ public class GrupoController {
         return ResponseEntity.ok().body(grupo);
     }
     
+    /**
+     * Editar grupo
+     * @param grupoEditado Editor para modificar um grupo:
+     */
     @PutMapping()
     public ResponseEntity<Grupo> editarGrupo(@RequestBody Grupo grupoEditado) {
         Grupo grupo = grupoService.editarGrupo(grupoEditado);
@@ -48,12 +59,20 @@ public class GrupoController {
         return ResponseEntity.ok().body(grupo);
     }
 
+    /**
+     * Visualizar todos os grupos cadastrados
+     * @return
+     */
     @GetMapping
     public ResponseEntity<List<Grupo>> vizualizarGrupos() {
         List<Grupo> grupos = grupoService.listarGrupos();
         return ResponseEntity.ok().body(grupos);
     }
 
+    /**
+     * Deletar grupo
+     * @param id Id do grupo a ser deletado:
+     */
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<MensagemDTO> deletarGrupo(@PathVariable int id) {
         try {
@@ -66,6 +85,10 @@ public class GrupoController {
         return ResponseEntity.ok().body(new MensagemDTO("OK", "OK"));
     }
     
+    /**
+     * Vincular usuario
+     * @param grupoUsuarioDto Editor para vincular um usuario a um grupo: 
+     */
     @PutMapping("/vincular-usuario")
     public ResponseEntity<MensagemDTO> vincularUsuario(@RequestBody GrupoUsuarioDto grupoUsuarioDto) {
         grupoService.vincularUsuario(grupoUsuarioDto);
@@ -73,12 +96,20 @@ public class GrupoController {
         return ResponseEntity.ok().body(new MensagemDTO("OK", "Usuário \"" + grupoUsuarioDto.getIdUsuario() + "\" vinculado ao grupo \"" + grupoUsuarioDto.getIdGrupo() + "\"."));
     }
 
+    /**
+     * PRECISA CORRIGIR
+     * @param idGrupo Insira o id do grupo para ver os usuarios vinculados:
+     */
     @GetMapping("/{idGrupo}/usuarios") 
     public ResponseEntity<List<Usuario>> vizualizarGrupos(@PathVariable int idGrupo) {
         List<Usuario> usuarios = grupoService.listarUsuarios(idGrupo);
         return ResponseEntity.ok().body(usuarios);
     }
 
+    /**
+     * PRECISA CORRIGIR
+     * @param idGrupo Insira o id do grupo para ver as categorias vinculadas:
+     */
     @GetMapping("/{idGrupo}/categorias")
     public ResponseEntity<List<Categoria>> getMethodName(@PathVariable int idGrupo) {
         List<Categoria> categoria = grupoService.listarCategorias(idGrupo);

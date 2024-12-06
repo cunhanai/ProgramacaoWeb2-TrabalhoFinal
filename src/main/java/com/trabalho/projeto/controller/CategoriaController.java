@@ -50,7 +50,7 @@ public class CategoriaController {
 
     /**
      * Editar categoria
-     * @param categoriaEditada Editor da categoria:
+     * @param categoriaEditada Editor para modificar uma categoria:
      */
     @PutMapping()
     public ResponseEntity<Categoria> editarCategoria(@RequestBody Categoria categoriaEditada) {
@@ -61,7 +61,7 @@ public class CategoriaController {
 
     /**
      * Vincular grupo
-     * @param grupoCategoriaDto Vincular um grupo a categoria:
+     * @param grupoCategoriaDto Editor para vincular um grupo a uma categoria:
      */
     @PutMapping("vincular-grupo")
     public ResponseEntity<MensagemDTO> vincularGrupo(@RequestBody GrupoCategoriaDto grupoCategoriaDto) {

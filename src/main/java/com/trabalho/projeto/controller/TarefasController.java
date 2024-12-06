@@ -22,19 +22,30 @@ import com.trabalho.projeto.model.Tarefas;
 import com.trabalho.projeto.service.TarefasService;
 
 
-@RequestMapping(value = "/tarefas")
+/**
+ * Controlador para tarefas
+ */
 @RestController
+@RequestMapping(value = "/tarefas")
 public class TarefasController {
     
     @Autowired
     TarefasService tarefasService;
 
+    /**
+     * Adicionar tarefa
+     * @param tarefasDto Editor para adicionar uma tarefa:
+     */
     @PostMapping
     public ResponseEntity<Tarefas> adicionarTarefa(@RequestBody TarefasDto tarefasDto) {
         Tarefas tarefas = tarefasService.adicionarTarefas(tarefasDto);
         return ResponseEntity.ok().body(tarefas);
     }
 
+    /**
+     * Editar tarefa
+     * @param tarefaEditada Editor para modificar uma tarefa:
+     */
     @PutMapping
     public ResponseEntity<Tarefas> editarTarefa(@RequestBody Tarefas tarefaEditada) {
         Tarefas tarefas = tarefasService.editarTarefa(tarefaEditada);
@@ -42,18 +53,29 @@ public class TarefasController {
         return ResponseEntity.ok().body(tarefas);
     }
 
+    /**
+     * Buscar tarefa
+     * @param id Id da tarefa que deseja encontrar:
+     */
     @GetMapping(value = "/{id}")
     public ResponseEntity<Tarefas> verTarefa(@RequestParam int id) {
         Tarefas tarefa = tarefasService.buscarTarefa(id);
         return ResponseEntity.ok().body(tarefa);
     }
 
+    /**
+     * Visualizar todas as tarefas
+     */
         @GetMapping
     public ResponseEntity<List<Tarefas>> vizualizarTarefas() {
         List<Tarefas> tarefas = tarefasService.listarTarefas();
         return ResponseEntity.ok().body(tarefas);
     }
 
+    /**
+     * Deletar tarefa
+     * @param id Id da tarefa a ser deletada:
+     */
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<MensagemDTO> deletarTarefa (@PathVariable int id) {
         try {
@@ -66,6 +88,10 @@ public class TarefasController {
         return ResponseEntity.ok().body(new MensagemDTO("OK", "OK"));
     }
 
+    /**
+     * Vincular categoria
+     * @param tarefasCategoriaDto Editor para vincular uma categoria a uma tarefa:
+     */
     @PutMapping("/vincular-categoria")
     public ResponseEntity<MensagemDTO> vincularCategoria(@RequestBody TarefasCategoriaDto tarefasCategoriaDto) {
         tarefasService.vincularCategoria(tarefasCategoriaDto);
@@ -73,6 +99,10 @@ public class TarefasController {
         return ResponseEntity.ok().body(new MensagemDTO("OK", "Categoria \"" + tarefasCategoriaDto.getIdCategoria() + "\" vinculada a tarefa \"" + tarefasCategoriaDto.getIdTarefa() + "\"."));
     }
 
+    /**
+     * Vincular usuario
+     * @param usuarioTarefas Editor para vincular um usuario a uma tarefa:
+     */
     @PostMapping("/vincular-usuario")
     public ResponseEntity<UsuarioTarefaDto> vincularUsuario(@RequestBody UsuarioTarefaDto usuarioTarefas) {
         tarefasService.vincularUsuario(usuarioTarefas.getTarefaId(), usuarioTarefas.getUsuarioId());
@@ -80,6 +110,11 @@ public class TarefasController {
     }
     
     
+    /**
+     * Desvincular usuario
+     * @param usuarioTarefas Editor para desvincular um usuario a uma tarefa:
+     * @return
+     */
     @PostMapping("/desvincular-usuario")
     public ResponseEntity<MensagemDTO> desvincularUsuario(@RequestBody UsuarioTarefaDto usuarioTarefas) {
         tarefasService.desvincularUsuario(usuarioTarefas.getTarefaId(), usuarioTarefas.getUsuarioId());
