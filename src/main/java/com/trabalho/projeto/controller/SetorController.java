@@ -89,12 +89,12 @@ public class SetorController {
     }
 
     /**
-     * talvez tenha q tirar esse
-     * @param idSetor
+     * Vizualiza todos os grupos vinculado ao setor
+     * @param id Id do setor requerido
      */
     @GetMapping("/grupos/{id}")
-    public ResponseEntity<List<Grupo>> vizualizarSetores(@PathVariable int idSetor) {
-        List<Grupo> grupos = setorService.listarGrupos(idSetor);
+    public ResponseEntity<List<Grupo>> vizualizarSetores(@PathVariable int id) {
+        List<Grupo> grupos = setorService.listarGrupos(id);
         return ResponseEntity.ok().body(grupos);
     }
 }

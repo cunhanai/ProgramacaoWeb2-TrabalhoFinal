@@ -97,7 +97,7 @@ public class GrupoController {
     }
 
     /**
-     * PRECISA CORRIGIR
+     * Lista todos os usuários vinculados ao grupo
      * @param idGrupo Insira o id do grupo para ver os usuarios vinculados:
      */
     @GetMapping("/{idGrupo}/usuarios") 
@@ -107,7 +107,7 @@ public class GrupoController {
     }
 
     /**
-     * PRECISA CORRIGIR
+     * Lista todas as categorias vinculadas ao grupo
      * @param idGrupo Insira o id do grupo para ver as categorias vinculadas:
      */
     @GetMapping("/{idGrupo}/categorias")
